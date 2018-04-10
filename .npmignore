@@ -1,0 +1,8 @@
+__tests__
+node_modules
+src
+.babelrc
+.gitignore
+package-lock.json
+webpack.config.js
+npm-debug.log
