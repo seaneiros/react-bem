@@ -1,11 +1,11 @@
 {
-  "name": "@sean/react-bem",
-  "version": "1.0.0",
+  "name": "@seaneiros/react-bem",
+  "version": "1.0.1",
   "description": "A set of decorators to ease bem classes management",
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "prepublish": "npm run build",
+    "prepare": "npm run build",
     "build": "./node_modules/.bin/webpack-cli -p"
   },
   "keywords": [
@@ -15,9 +15,6 @@
   ],
   "author": "Andrew But",
   "license": "ISC",
-  "dependencies": {
-    "react": "^16.3.1"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/seaneiros/react-bem.git"
@@ -32,6 +29,7 @@
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "jest": "^22.4.3",
+    "react": "^16.3.1",
     "react-dom": "^16.3.1",
     "react-test-renderer": "^16.3.1",
     "webpack": "^4.5.0",

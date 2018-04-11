@@ -84,7 +84,7 @@ function createModifier(baseClass, modifierName, modifierValue = null) {
     return className;
   }
 
-  const classList = [className];
+  const classList = [];
 
   if (Array.isArray(modifierValue)) {
     const modifierClassList = modifierValue
