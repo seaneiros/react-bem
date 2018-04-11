@@ -35,7 +35,6 @@ var configCjs = {
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, 'lib/cjs'),
-    library: 'react-bem',
     libraryTarget: 'commonjs',
   },
 };
@@ -74,7 +73,6 @@ var configUmd = {
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, 'lib/umd'),
-    library: 'react-bem',
     libraryTarget: 'umd',
   },
 };
