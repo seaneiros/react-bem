@@ -109,6 +109,41 @@ test('can create block class with all params', () => {
   ].join(' '));
 });
 
+test('can create block class with all params and custom delimiters', () => {
+  const bem = new Bem({
+    block: 'testBlock',
+    modifiers: [
+      'modifier1',
+      'modifier2',
+    ],
+    config: {
+      modifier: '::',
+      modifierValue: '_',
+    },
+  });
+
+  const incomingProps = {
+    className: 'classFromProps',
+    modifier1: true,
+    modifier2: null,
+  };
+
+  const inputModifiers = {
+    modifier3: 'value',
+    modifier4: [1, 2, , 4],
+  };
+
+  expect(bem.block(incomingProps, inputModifiers)).toBe([
+    'classFromProps',
+    'testBlock',
+    'testBlock::modifier1',
+    'testBlock::modifier3_value',
+    'testBlock::modifier4_1',
+    'testBlock::modifier4_2',
+    'testBlock::modifier4_4',
+  ].join(' '));
+});
+
 test('can create element class', () => {
   const bem = new Bem({
     block: 'testBlock',
@@ -137,5 +172,32 @@ test('can create element class with modifiers', () => {
     'testBlock__element--modifier4-1',
     'testBlock__element--modifier4-2',
     'testBlock__element--modifier4-4',
+  ].join(' '));
+});
+
+test('can create element class with modifiers and custom delimiters', () => {
+  const bem = new Bem({
+    block: 'testBlock',
+    config: {
+      element: '~~',
+      modifier: '::',
+    },
+  });
+
+  const inputModifiers = {
+    modifier1: true,
+    modifier2: false,
+    modifier3: 'value',
+    modifier4: [0, 1, 2, , 4],
+  };
+
+  expect(bem.element('element', inputModifiers)).toBe([
+    'testBlock~~element',
+    'testBlock~~element::modifier1',
+    'testBlock~~element::modifier3-value',
+    'testBlock~~element::modifier4-0',
+    'testBlock~~element::modifier4-1',
+    'testBlock~~element::modifier4-2',
+    'testBlock~~element::modifier4-4',
   ].join(' '));
 });

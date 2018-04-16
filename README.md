@@ -233,5 +233,19 @@ const bem = new BemHelper({
 ...
 ```
 
+## Configuration
+It is possible to change delimiters as you want
+```javascript
+bem({
+  block: 'someBlock',
+  modifiers: [ ... ],
+  config: {
+    element: '~~',
+    modifier: '::',
+    modifierValue: '_',
+  },
+})(MyComponent);
+```
+
 # License
 ISC

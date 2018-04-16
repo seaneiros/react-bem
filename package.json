@@ -1,6 +1,6 @@
 {
   "name": "@seaneiros/react-bem",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "A set of decorators to ease bem classes management",
   "main": "index.js",
   "scripts": {
@@ -9,9 +9,14 @@
     "build": "./node_modules/.bin/webpack-cli -p"
   },
   "keywords": [
+    "BEM",
     "bem",
     "react",
-    "decorator"
+    "decorator",
+    "react-bem",
+    "block",
+    "element",
+    "modifier"
   ],
   "author": "Andrew But",
   "license": "ISC",

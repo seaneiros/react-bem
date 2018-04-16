@@ -1,4 +1,8 @@
-
+const DEFAULT_BEM_CONFIG = {
+  element: '__',
+  modifier: '--',
+  modifierValue: '-',
+};
 /**
  * Class to contain bem methods
  *
@@ -7,10 +11,11 @@
 class Bem {
 
   constructor(settings = {}) {
-    const { block = 'nameless', modifiers = [] } = settings;
+    const { block = 'nameless', modifiers = [], config = DEFAULT_BEM_CONFIG } = settings;
 
     this.blockName = block;
     this.modifiers = modifiers;
+    this.config = { ...DEFAULT_BEM_CONFIG, ...config };
   }
 
   /**
@@ -31,7 +36,7 @@ class Bem {
     classList.push(this.blockName);
 
     const modifiersFromPropsAsObject = this.modifiers.reduce( (collector, modifier) =>  ({ ...collector, [modifier]: props[modifier] }), {});
-    const classListFromModifiers = modifiersFromObj(this.blockName, { ...modifiersFromPropsAsObject, ...passedModifiers });
+    const classListFromModifiers = modifiersFromObj(this.blockName, { ...modifiersFromPropsAsObject, ...passedModifiers }, this.config);
 
 
     classList.push(...classListFromModifiers);
@@ -48,9 +53,9 @@ class Bem {
    * @return {String}
    */
   element(elementName, modifiers = {}) {
-    const
-      elementClass = `${this.blockName}__${elementName}`,
-      modifiersClasses = modifiersFromObj(elementClass, modifiers);
+    const { element: elementDelimiter } = this.config;
+    const elementClass = `${this.blockName}${elementDelimiter}${elementName}`;
+    const modifiersClasses = modifiersFromObj(elementClass, modifiers, this.config);
 
     return [elementClass, ...modifiersClasses].join(' ');
   }
@@ -68,16 +73,21 @@ export default Bem;
  * @param {String} baseClass
  * @param {String} modifierName
  * @param {any} modifierValue
+ * @param {any} config
  * @return {String}
  */
-function createModifier(baseClass, modifierName, modifierValue = null) {
-  
+function createModifier(baseClass, modifierName, modifierValue = null, config = DEFAULT_BEM_CONFIG) {
+  const {
+    modifier: modifierDelimiter,
+    modifierValue: modifierValueDelimiter,
+  } = config;
+
   // check only null, undefined and false values to save 0 value
   if (modifierValue == null || modifierValue === false) {
     return '';
   }
 
-  const className = `${baseClass}--${modifierName}`;
+  const className = `${baseClass}${modifierDelimiter}${modifierName}`;
 
   // if no modifier value passed or it is boolean, then return modifier class itself
   if (modifierValue === true) {
@@ -90,14 +100,14 @@ function createModifier(baseClass, modifierName, modifierValue = null) {
     const modifierClassList = modifierValue
       .filter( value => value != null && value !== false )
       .reduce( (collector, value) => {
-        collector.push(...createModifier(baseClass, modifierName, value).split(' '));
+        collector.push(...createModifier(baseClass, modifierName, value, config).split(' '));
 
         return collector;
       }, []);
     
     classList.push(...modifierClassList);
   } else {
-    classList.push(`${className}-${modifierValue}`);
+    classList.push(`${className}${modifierValueDelimiter}${modifierValue}`);
   }
   
   return [...new Set(classList)].join(' ');
@@ -109,13 +119,14 @@ function createModifier(baseClass, modifierName, modifierValue = null) {
  * @method modifiersFromObj
  * @param {String} baseClass
  * @param {Object} modifiers
+ * @param {Object} config
  * @return {Array}
  */
-function modifiersFromObj(baseClass, modifiers) {
+function modifiersFromObj(baseClass, modifiers, config) {
   const classList = [];
 
   Object.keys(modifiers).forEach( modifier => {
-    !!modifiers[modifier] && classList.push(createModifier(baseClass, modifier, modifiers[modifier]));
+    !!modifiers[modifier] && classList.push(createModifier(baseClass, modifier, modifiers[modifier], config));
   });
 
   return classList;
