@@ -6,6 +6,7 @@ var configCjs = {
     Bem: './src/Bem.js',
     static: './src/static/index.js',
     hoc: './src/hoc/index.js',
+    hook: './src/hooks/index.js',
   },
   externals: {
     react: {
@@ -44,6 +45,7 @@ var configUmd = {
     Bem: './src/Bem.js',
     static: './src/static/index.js',
     hoc: './src/hoc/index.js',
+    hook: './src/hooks/index.js',
   },
   externals: {
     react: {

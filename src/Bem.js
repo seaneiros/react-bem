@@ -126,7 +126,7 @@ function modifiersFromObj(baseClass, modifiers, config) {
   const classList = [];
 
   Object.keys(modifiers).forEach( modifier => {
-    !!modifiers[modifier] && classList.push(createModifier(baseClass, modifier, modifiers[modifier], config));
+    modifiers[modifier] != null && modifiers[modifier] !== false && classList.push(createModifier(baseClass, modifier, modifiers[modifier], config));
   });
 
   return classList;

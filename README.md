@@ -218,6 +218,33 @@ Notice, that we don't need to pass `props` as the first parameter to `bem.block`
 
 > HOC will create helper instance for every decorated component, so it's **not recommended** to use it for lists.
 
+## Hook
+Since React v 16.8 we can use hooks in our functional components
+
+```javascript
+// MyComponent.js
+
+import React from 'react';
+import { useBem } from '@seaneiros/react-bem';
+
+const MyComponent = props => {
+  const bem = useBem({
+    block: 'block',
+    modifiers: [
+      'someExternalModifier',
+    ],
+  }, props);
+
+  return (
+    <div className={bem.block({ modifier: true })}>
+      <div className={bem.element('element')}>
+        My component
+      </div>
+    </div>
+  );
+};
+```
+
 ## Helper
 Although you are expected to use decorators, it is still possible to use helper itself.
 
