@@ -10,6 +10,15 @@ import useBem       from '../src/hooks';
 
 configure({ adapter: new Adapter() });
 
+const SimpleComponent = () => {
+  const [ modifier, setModifier ] = useState(false);
+  const bem = useBem({ block: 'testBlock' });
+
+  return (
+    <div className={bem.block({ modifier })} onClick={() => setModifier(!modifier)} />
+  );
+};
+
 const MyComponent = props => {
   const [ modValue, setModValue ] = useState(true);
   const bem = useBem({
@@ -49,6 +58,22 @@ class WrapperComponent extends React.PureComponent {
   }
 }
 
+
+test('simple component should be rendered correctly without passing props to hook', () => {
+  const wrapper = mount(<SimpleComponent />);
+
+  expect(wrapper.html()).toEqual('<div class="testBlock"></div>');
+});
+
+test('simple component should be rendered correctly without passing props to hook and after inner state change', () => {
+  const wrapper = mount(<SimpleComponent />);
+
+  expect(wrapper.html()).toEqual('<div class="testBlock"></div>');
+  wrapper.find('.testBlock').simulate('click');
+  expect(wrapper.html()).toEqual('<div class="testBlock testBlock--modifier"></div>');
+  wrapper.find('.testBlock').simulate('click');
+  expect(wrapper.html()).toEqual('<div class="testBlock"></div>');
+});
 
 test('component should be rendered correctly without external props', () => {
   const wrapper = mount(<MyComponent />);

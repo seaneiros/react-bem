@@ -4,7 +4,7 @@ import {
 import Bem    from '../Bem';
 
 
-function useBem(settings, props) {
+function useBem(settings, props = {}) {
   const bemInstance = new Bem(settings);
   const { className } = props;
   const { modifiers = [] } = settings;

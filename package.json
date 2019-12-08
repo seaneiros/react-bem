@@ -1,6 +1,6 @@
 {
   "name": "@seaneiros/react-bem",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A set of decorators to ease bem classes management",
   "main": "index.js",
   "scripts": {
